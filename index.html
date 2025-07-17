@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Atividades para Advogado</title>
+    <!-- Inclui Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define a fonte Inter para todo o corpo, se disponível, caso contrário, usa Arial ou sans-serif */
+        body {
+            font-family: "Inter", Arial, sans-serif;
+        }
+        /* Estilos para o modal de notificação */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; /* Fica por cima de tudo */
+            z-index: 1000; /* Alto z-index para garantir que esteja no topo */
+            left: 0;
+            top: 0;
+            width: 100%; /* Largura total */
+            height: 100%; /* Altura total */
+            overflow: auto; /* Habilita scroll se o conteúdo for muito grande */
+            background-color: rgba(0,0,0,0.4); /* Fundo semi-transparente */
+            /* display: flex; REMOVIDO DAQUI - AGORA É APLICADO APENAS VIA JAVASCRIPT QUANDO NECESSÁRIO */
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto; /* Margens automáticas para centralizar */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Largura do modal */
+            max-width: 500px; /* Largura máxima */
+            border-radius: 10px; /* Cantos arredondados */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            text-align: center; /* Texto centralizado */
+        }
+        .close-button {
+            color: #aaa;
+            float: right; /* Botão de fechar à direita */
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 sm:p-6 md:p-8">
+
+    <form id="jobForm" class="bg-white p-6 sm:p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Relatório de Atividades para Advogado</h2>
+
+        <div class="mb-6">
+            <label for="empresa" class="block text-gray-700 text-sm font-bold mb-2">1. Nome da empresa:</label>
+            <input type="text" id="empresa" name="empresa" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+        </div>
+
+        <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="periodo_geral_inicio" class="block text-gray-700 text-sm font-bold mb-2">2. Período trabalhado - Início:</label>
+                <input type="date" id="periodo_geral_inicio" name="periodo_geral_inicio" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+            </div>
+            <div>
+                <label for="periodo_geral_fim" class="block text-gray-700 text-sm font-bold mb-2">Período trabalhado - Fim:</label>
+                <input type="date" id="periodo_geral_fim" name="periodo_geral_fim" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+            </div>
+        </div>
+
+        <div class="border-t-2 border-gray-200 pt-6 mt-8">
+
+            <div class="mb-4">
+                <label for="cargo1_cargo" class="block text-gray-700 text-sm font-bold mb-2">3. Função:</label>
+                <input type="text" id="cargo1_cargo" name="cargo1_cargo" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="cargo1_funcao" class="block text-gray-700 text-sm font-bold mb-2">4. Operação:</label>
+                <input type="text" id="cargo1_funcao" name="cargo1_funcao" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+            </div>
+
+            <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="cargo1_periodo_inicio" class="block text-gray-700 text-sm font-bold mb-2">5. Período nesta função - Início:</label>
+                    <input type="date" id="cargo1_periodo_inicio" name="cargo1_periodo_inicio" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label for="cargo1_periodo_fim" class="block text-gray-700 text-sm font-bold mb-2">Período nesta função - Fim:</label>
+                    <input type="date" id="cargo1_periodo_fim" name="cargo1_periodo_fim" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="cargo1_atividades" class="block text-gray-700 text-sm font-bold mb-2">6. Atividades principais:</label>
+                <textarea id="cargo1_atividades" name="cargo1_atividades" rows="4" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="cargo1_ferramentas" class="block text-gray-700 text-sm font-bold mb-2">7. Ferramentas/equipamentos utilizados:</label>
+                <textarea id="cargo1_ferramentas" name="cargo1_ferramentas" rows="2" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">8. Postura corporal durante o trabalho:</label>
+                <div class="checkbox-group grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="cargo1_postura" value="Em pé o tempo todo" class="form-checkbox h-5 w-5 text-green-600 rounded-md focus:ring-green-500">
+                        <span class="ml-2 text-gray-700">Em pé o tempo todo</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="cargo1_postura" value="Sentado o tempo todo" class="form-checkbox h-5 w-5 text-green-600 rounded-md focus:ring-green-500">
+                        <span class="ml-2 text-gray-700">Sentado o tempo todo</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="cargo1_postura" value="Alternava entre em pé e sentado" class="form-checkbox h-5 w-5 text-green-600 rounded-md focus:ring-green-500">
+                        <span class="ml-2 text-gray-700">Alternava entre em pé e sentado</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="cargo1_postura" value="De cócoras/agachado frequentemente" class="form-checkbox h-5 w-5 text-green-600 rounded-md focus:ring-green-500">
+                        <span class="ml-2 text-gray-700">De cócoras/agachado frequentemente</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="cargo1_postura" value="Carregava peso com frequência" class="form-checkbox h-5 w-5 text-green-600 rounded-md focus:ring-green-500">
+                        <span class="ml-2 text-gray-700">Carregava peso com frequência</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="cargo1_postura" value="Movimentos repetitivos com braços/ombros" class="form-checkbox h-5 w-5 text-green-600 rounded-md focus:ring-green-500">
+                        <span class="ml-2 text-gray-700">Movimentos repetitivos com braços/ombros</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="cargo1_carga_horaria" class="block text-gray-700 text-sm font-bold mb-2">9. Carga horária diária e dias por semana:</label>
+                <input type="text" id="cargo1_carga_horaria" name="cargo1_carga_horaria" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+            </div>
+
+            <div class="mb-4">
+                <label for="cargo1_dor" class="block text-gray-700 text-sm font-bold mb-2">10. Você sentia dor ou desconforto nessa função?</label>
+                <select id="cargo1_dor" name="cargo1_dor" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <option value="">Selecione</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="cargo1_dor_detalhes" class="block text-gray-700 text-sm font-bold mb-2">Se sim, onde e o que sentia?</label>
+                <textarea id="cargo1_dor_detalhes" name="cargo1_dor_detalhes" rows="2" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="cargo1_contribuiu" class="block text-gray-700 text-sm font-bold mb-2">11. Essa função contribuiu para seus problemas de saúde?</label>
+                <select id="cargo1_contribuiu" name="cargo1_contribuiu" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <option value="">Selecione</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="cargo1_contribuiu_porque" class="block text-gray-700 text-sm font-bold mb-2">Por quê?</label>
+                <textarea id="cargo1_contribuiu_porque" name="cargo1_contribuiu_porque" rows="2" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+            </div>
+        </div>
+
+        <div class="border-t-2 border-gray-200 pt-6 mt-8">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">📌 Outras Informações Importantes</h3>
+
+            <div class="mb-4">
+                <label for="acidente" class="block text-gray-700 text-sm font-bold mb-2">12. Houve algum acidente ou esforço físico que iniciou a dor?</label>
+                <textarea id="acidente" name="acidente" rows="3" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="atendimento_medico" class="block text-gray-700 text-sm font-bold mb-2">13. Você buscou atendimento médico durante o trabalho?</label>
+                <select id="atendimento_medico" name="atendimento_medico" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <option value="">Selecione</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="diagnostico_empresa" class="block text-gray-700 text-sm font-bold mb-2">Se sim, onde foi atendido e qual diagnóstico?</label>
+                <textarea id="diagnostico_empresa" name="diagnostico_empresa" rows="3" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="diagnostico_atual" class="block text-gray-700 text-sm font-bold mb-2">14. Diagnósticos médicos atuais (coluna/ombro):</label>
+                <textarea id="diagnostico_atual" name="diagnostico_atual" rows="3" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="atividades_atuais" class="block text-gray-700 text-sm font-bold mb-2">15. Você consegue hoje realizar atividades do dia a dia normalmente?</label>
+                <select id="atividades_atuais" name="atividades_atuais" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <option value="">Selecione</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="dificuldades_atuais" class="block text-gray-700 text-sm font-bold mb-2">Se não, o que tem dificuldade de fazer?</label>
+                <textarea id="dificuldades_atuais" name="dificuldades_atuais" rows="3" class="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out mt-6">
+            Enviar Formulário
+        </button>
+    </form>
+
+    <!-- Modal de Notificação -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p id="modalMessage" class="text-lg"></p>
+        </div>
+    </div>
+
+    <script>
+        // Obtém referências para o modal e seus elementos
+        const modal = document.getElementById("myModal");
+        const modalMessage = document.getElementById("modalMessage");
+        const closeButton = document.getElementsByClassName("close-button")[0];
+
+        // Função para exibir o modal com uma mensagem
+        function showModal(message) {
+            modalMessage.textContent = message;
+            modal.style.display = "flex"; // Exibe o modal
+        }
+
+        // Função para fechar o modal
+        function closeModal() {
+            modal.style.display = "none"; // Esconde o modal
+        }
+
+        // Adiciona evento de clique ao botão de fechar o modal
+        closeButton.onclick = function() {
+            closeModal();
+        }
+
+        // Adiciona evento de clique fora do modal para fechar
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        document.getElementById("jobForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Previne o envio padrão do formulário
+
+            const form = event.target;
+            const data = new FormData(form);
+            const payload = {};
+
+            // Converte os dados do formulário para um objeto JSON
+            data.forEach((value, key) => {
+                // Para checkboxes, concatena os valores se houver múltiplos com o mesmo nome
+                if (payload[key]) {
+                    payload[key] += ', ' + value;
+                } else {
+                    payload[key] = value;
+                }
+            });
+
+            // Substitua esta URL pela URL de implantação do seu Google Apps Script
+            // Veja as instruções abaixo para como obter esta URL.
+            const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzkihLjP8TNm-mHXo3XxPkxgvqvgJJnWFTJZM0ZKh2iaDMJr10oSOJ-FeaO83SuYRYL/exec";
+
+            // A VERIFICAÇÃO AGORA ESTÁ DENTRO DO EVENTO DE SUBMISSÃO
+            if (WEBHOOK_URL !== "https://script.google.com/macros/s/AKfycbzkihLjP8TNm-mHXo3XxPkxgvqvgJJnWFTJZM0ZKh2iaDMJr10oSOJ-FeaO83SuYRYL/exec") {
+                showModal("Por favor, configure a 'SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI' no código JavaScript antes de enviar o formulário.");
+                return; // Impede o envio se a URL não estiver configurada
+            }
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: "POST",
+                    mode: "no-cors", // Necessário para evitar erros CORS com Google Apps Script
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                // Como usamos "no-cors", não podemos verificar response.ok diretamente.
+                // A resposta será um "opaque response".
+                // Assumimos sucesso se não houver erro na requisição fetch.
+                showModal("Formulário enviado com sucesso! Os dados foram registrados.");
+                form.reset(); // Limpa o formulário após o envio
+            } catch (error) {
+                console.error("Erro ao enviar o formulário:", error);
+                showModal("Erro ao enviar o formulário. Por favor, tente novamente.");
+            }
+        });
+    </script>
+</body>
+</html>
