@@ -272,10 +272,10 @@
 
             // Substitua esta URL pela URL de implantação do seu Google Apps Script
             // Veja as instruções abaixo para como obter esta URL.
-            const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwegUMgQJ1kdylGy7UB7e1XD5Jb2MT-tYTrku1uM_cqNQKLJ1kuDYSyPAZEsdpYkg3S/exec";
+            const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwPf9Em152DBZ1lahCofd5MRbF-1QWEjJ4ym3d5IvDzUU5eXRKzNOBmnoqiNp-djb1w/exec";
 
             // A VERIFICAÇÃO AGORA ESTÁ DENTRO DO EVENTO DE SUBMISSÃO
-            if (WEBHOOK_URL !== "https://script.google.com/macros/s/AKfycbwegUMgQJ1kdylGy7UB7e1XD5Jb2MT-tYTrku1uM_cqNQKLJ1kuDYSyPAZEsdpYkg3S/exec") {
+            if (WEBHOOK_URL !== "https://script.google.com/macros/s/AKfycbwPf9Em152DBZ1lahCofd5MRbF-1QWEjJ4ym3d5IvDzUU5eXRKzNOBmnoqiNp-djb1w/exec") {
                 showModal("Por favor, configure a 'SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI' no código JavaScript antes de enviar o formulário.");
                 return; // Impede o envio se a URL não estiver configurada
             }
